@@ -49,19 +49,23 @@ def _parser_factor(task_name: Text,
                    ignore_types: Optional[Iterable[str]] = None,
                    error: Text = "raise",
                    lang: Text = "en") -> Optional["BasePaeser"]:
-    from liyi_cute.shared.imports.bart_parser import BratParser
-    from liyi_cute.shared.imports.json_parser import JsonParser
+    from liyi_cute.shared.imports import bart_parser, json_parser, conll_parser
 
     if fformat == "ann":
-        parser_reader = BratParser(task_name=task_name,
-                                   ignore_types=ignore_types,
-                                   error=error,
-                                   lang=lang)
+        parser_reader = bart_parser.BratParser(task_name=task_name,
+                                               ignore_types=ignore_types,
+                                               error=error,
+                                               lang=lang)
     elif fformat == "json":
-        parser_reader = JsonParser(task_name=task_name,
-                                   ignore_types=ignore_types,
-                                   error=error,
-                                   lang=lang)
+        parser_reader = json_parser.JsonParser(task_name=task_name,
+                                               ignore_types=ignore_types,
+                                               error=error,
+                                               lang=lang)
+    elif fformat == "conll":
+        parser_reader = conll_parser.ConllParser(task_name=task_name,
+                                                 ignore_types=ignore_types,
+                                                 error=error,
+                                                 lang=lang)
     else:
         raise NotImplementedException
     return parser_reader
@@ -83,7 +87,7 @@ async def parser_async(
 
 
 def load_data(resource_name: Text,
-              task_name:Text=None
+              task_name: Text = None
               ) -> List[Any]:
     if not os.path.exists(resource_name):
         raise ValueError(f"File '{resource_name}' does not exist.")
@@ -101,7 +105,7 @@ def load_data(resource_name: Text,
 
 
 def _load(filename: Text,
-          task_name:Text=None
+          task_name: Text = None
           ) -> List[Any]:
     """Loads a single training data file from disk."""
 

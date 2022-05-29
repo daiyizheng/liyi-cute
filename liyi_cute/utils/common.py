@@ -13,9 +13,10 @@ import glob
 import itertools
 import os
 import logging
+from collections import OrderedDict, _OrderedDictKeysView, _OrderedDictValuesView
 
 from collections.abc import Iterable
-from typing import Union, Optional, Dict, Text, Any, List, Coroutine, TypeVar, Set
+from typing import Union, Optional, Dict, Text, Any, List, Coroutine, TypeVar, Set, Tuple
 
 from liyi_cute.shared.exceptions import NotImplementedException
 
@@ -36,7 +37,7 @@ def iter_file_groups(
             filename = os.path.splitext(os.path.basename(dirname))[0]
             filenames = []
             for suffix in exts:
-                filenames.append(filename+suffix)
+                filenames.append(filename + suffix)
             for filename in filenames:
                 yield os.path.join(dirpath, filename)
         else:
@@ -74,20 +75,44 @@ def iter_file_groups(
         yield key, sorted_group
 
 
-def check_key(js: Optional[Dict, List[Dict]],
+def check_key(curr_keys: Set,
               need_keys: Set
               ) -> None:
-    if isinstance(js, dict):
-        curr_keys = set(js.keys())
-    elif isinstance(js, list):
-        if len(js):
-            curr_keys = set(js[0].keys())
-        else:
-            raise KeyError("json file keys is empty")
-    else:
-        raise NotImplementedException
     if curr_keys != need_keys:
         raise KeyError("json only need keys about : %s" % " ".join(need_keys))
+
+
+def check_bio(tags: List
+              ) -> bool:
+    """
+    检测输入的tags是否是bio编码
+    如果不是bio编码
+    那么错误的类型
+    (1)编码不在BIO中
+    (2)第一个编码是I
+    (3)当前编码不是B,前一个编码不是O
+    :param tags:
+    :return:
+    """
+    for i, tag in enumerate(tags):
+        if tag == 'O':
+            continue
+        tag_list = tag.split("-")
+        if len(tag_list) != 2 or tag_list[0] not in set(['B', 'I']):
+            # 非法编码
+            return False
+        if tag_list[0] == 'B':
+            continue
+        elif i == 0 or tags[i - 1] == 'O':
+            # 如果第一个位置不是B或者当前编码不是B并且前一个编码0，则全部转换成B
+            tags[i] = 'B' + tag[1:]
+        elif tags[i - 1][1:] == tag[1:]:
+            # 如果当前编码的后面类型编码与tags中的前一个编码中后面类型编码相同则跳过
+            continue
+        else:
+            # 如果编码类型不一致，则重新从B开始编码
+            tags[i] = 'B' + tag[1:]
+    return True
 
 
 def run_in_loop(
@@ -134,3 +159,14 @@ def doubleQuotes(text):
     :return:
     """
     return text.replace('"', "'")
+
+
+def is_cut_number(ids:List[Text]
+                  ) -> Tuple[List[str], List[int]]:
+    ex_dict = OrderedDict()
+    for id in ids:
+        if id in ex_dict:
+            ex_dict[id] += 1
+        else:
+            ex_dict[id] = 1
+    return list(ex_dict.keys()), list(ex_dict.values())

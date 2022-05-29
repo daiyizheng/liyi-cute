@@ -12,7 +12,7 @@ from typing import List, Tuple, Text
 from liyi_cute.shared.imports.schemas.schema import Entity, Example, Relation, Event
 
 
-class Preprocess(abc.ABC):
+class Process(abc.ABC):
     @staticmethod
     def entity_alignment(entities: List[Entity],
                          offset_mapping: Tuple[int, int]
@@ -60,7 +60,7 @@ class Preprocess(abc.ABC):
             cut_start = ent.start
             cut_end = ent.end
             if text[cut_start:cut_end] != mention:
-                print("\033[1;35m entity is not aligned  \033[0m")
+                print("\033[1;35m entity is not aligned \033[0m")
                 print("\033[1;35m cut_text:%s  \033[0m" % text)
                 print("\033[1;35m cut_start:%s  \033[0m" % cut_start)
                 print("\033[1;35m cut_end:%s  \033[0m" % cut_end)

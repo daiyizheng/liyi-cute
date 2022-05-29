@@ -7,7 +7,7 @@
 import asyncio
 
 from liyi_cute.shared.imports.bart_parser import BratParser
-from liyi_cute.shared.loading import parser
+from liyi_cute.shared.loadings import parser
 
 
 async def sigle_parse():

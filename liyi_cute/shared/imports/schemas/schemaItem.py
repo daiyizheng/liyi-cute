@@ -8,6 +8,7 @@ from marshmallow import Schema, fields, post_load
 
 from .schema import Entity, Relation, Event, Example
 
+
 class EntitySchema(Schema):
     mention = fields.Str()
     type = fields.Str()
@@ -38,6 +39,7 @@ class EventSchema(Schema):
     def make_event(self, data, **kwargs):
         return Event(**data)
 
+
 class ExampleSchema(Schema):
     text = fields.Str()
     entities = fields.List(fields.Nested(EntitySchema()))
@@ -49,3 +51,10 @@ class ExampleSchema(Schema):
     @post_load
     def make_example(self, data, **kwargs):
         return Example(**data)
+
+
+class NerExampleSchema(Schema):
+    text = fields.List(fields.Str())
+    entities = fields.List(fields.Str())
+    id = fields.Str(default=None)
+    task_name = fields.Str(default="ner")

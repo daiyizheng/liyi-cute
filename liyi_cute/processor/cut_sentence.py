@@ -6,12 +6,12 @@
 # @File    : cut_sentence.py
 from typing import Optional, List
 
-from liyi_cute.processor.preprocess import Preprocess
+from liyi_cute.processor.process import Process
 
 from liyi_cute.shared.imports.schemas.schema import Example
 
 
-class CutSentence(Preprocess):
+class CutSentence(Process):
     def __call__(self,
                  examples: List[Example],
                  is_fine_cut: bool = False,

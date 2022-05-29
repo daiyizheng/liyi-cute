@@ -7,9 +7,10 @@
 
 from __future__ import annotations
 
-from typing import Optional, Union, Text, List, Dict, Tuple, Any
+from typing import Optional, Union, List
 from collections.abc import Iterable
 import dataclasses
+
 
 @dataclasses.dataclass
 class Entity(object):
@@ -19,6 +20,7 @@ class Entity(object):
     end: int
     id: Optional[str] = None
 
+
 @dataclasses.dataclass
 class Relation(object):
     type: str
@@ -26,9 +28,11 @@ class Relation(object):
     arg2: Entity
     id: Optional[str] = None
 
+
 @dataclasses.dataclass
 class Event(object):
     id: Optional[str] = None
+
 
 @dataclasses.dataclass
 class Example(object):
@@ -36,5 +40,14 @@ class Example(object):
     entities: list[Entity] = dataclasses.field(default_factory=list)
     relations: list[Relation] = dataclasses.field(default_factory=list)
     events: list[Event] = dataclasses.field(default_factory=list)
-    id: Optional[str] = None
-    task_name:Optional[str] = None
+    id: Optional[str, int] = None
+    task_name: Optional[str] = None
+
+
+## 只是针对conll格式的数据
+@dataclasses.dataclass
+class NerExample(object):
+    text: List[str, Iterable[str]]
+    entities: List[str, Iterable[str]] = dataclasses.field(default_factory=list)
+    id: Optional[str, int] = None
+    task_name: Optional[str] = "ner"
