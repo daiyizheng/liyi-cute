@@ -9,6 +9,8 @@
 # liyi_cute: Text Tools
 liyi_cute 是文本辅助工具，帮助NlPer减少模型输入前的预处理工作
 
+online documentation:[the read docs](https://liyi-cute.readthedocs.io/en/latest/index.html#)
+
 ## Usage:
 ```shell script
 python setup.py install
