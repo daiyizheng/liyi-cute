@@ -22,22 +22,22 @@ class Visualize(object):
 
     def dep_visualization(self,
                           example: Example,
-                          is_serve:bool =False,
-                          options:bool = None,
-                          jupyter:bool = False
+                          is_serve: bool = False,
+                          options: bool = None,
+                          jupyter: bool = False
                           ) -> None:
         doc = self.nlp(example.text)
         if not options:
-            options = {"font": "Source Sans Pro", 'distance': 120} # "compact": True, "bg": "#09a3d5","color": "white"
+            options = {"font": "Source Sans Pro", 'distance': 120}  # "compact": True, "bg": "#09a3d5","color": "white"
         if is_serve:
             displacy.serve(doc, style='dep', options=options)
         displacy.render(doc, style='dep', jupyter=jupyter, options=options)
 
     def ner_visualization(self,
                           example: Example,
-                          is_serve:bool=False,
-                          options:Dict=None,
-                          jupyter:bool=False
+                          is_serve: bool = False,
+                          options: Dict = None,
+                          jupyter: bool = False
                           ) -> None:
 
         ents = []
@@ -77,7 +77,7 @@ class Visualize(object):
 
     def info_show(self,
                   exampele: Example,
-                  keep_tag:Set=None
+                  keep_tag: Set = None
                   ) -> None:
         doc = self.nlp(exampele.text)
         print("{:<15} | {:<8} | {:<8} | {:<15} | {:<20}".format('Token', 'Tag', 'Relation', 'Head', 'Children'))
@@ -90,7 +90,7 @@ class Visualize(object):
                                                                         str(token.tag_),
                                                                         str(token.dep_),
                                                                         str(token.head.text),
-                                                                 str([child for child in token.children])))
+                                                                        str([child for child in token.children])))
             else:
                 if token.tag_ in keep_tag:
                     print("{:<15} | {:<8} | {:<8} | {:<15} | {:<20}".format(str(token.text),

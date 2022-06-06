@@ -112,12 +112,6 @@ class Process(abc.ABC):
                        relations=new_relations,
                        events=new_events)
 
-
-
-
-
-
-
     def info_alignment(self, id: Text,
                        task_name: Text,
                        sentences: List[Text],
