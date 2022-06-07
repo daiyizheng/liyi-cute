@@ -7,16 +7,17 @@
 Welcome to liyi-cute's documentation!
 =====================================
 
-NLP preprocessing tools
+NLP 文本处理辅助工具
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: 目录:
 
-   imports
-   process
-   statistics
-   visualization
+   安装
+   加载数据
+   预处理
+   统计
+   可视化
 
 
 
