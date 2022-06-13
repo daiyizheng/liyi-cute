@@ -64,18 +64,20 @@ def read_file(filename: Union[Text, Path],
 def json_to_string(obj: Any,
                    **kwargs: Any
                    ) -> Text:
-    """Dumps a JSON-serializable object to string.
-    code come from https://github.com/RasaHQ/rasa/blob/rasa/shared/nlu/training_data/formats/rasa.py#L109
-    Args:
-        obj: JSON-serializable object.
-        kwargs: serialization options. Defaults to 2 space indentation
-                and disable escaping of non-ASCII characters.
+    """
     Returns:
         The objects serialized to JSON, as a string.
     """
     indent = kwargs.pop("indent", 2)
     ensure_ascii = kwargs.pop("ensure_ascii", False)
     return json.dumps(obj, indent=indent, ensure_ascii=ensure_ascii, **kwargs)
+
+
+def string_to_json(file_path,
+                   encoding: Text = DEFAULT_ENCODING,
+                   **kwargs: Any
+                   ) -> Dict:
+    return json.load(open(file_path, "r", encoding=encoding), kwargs)
 
 
 def list_files(path: Text

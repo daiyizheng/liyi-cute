@@ -13,12 +13,10 @@ import glob
 import itertools
 import os
 import logging
-from collections import OrderedDict, _OrderedDictKeysView, _OrderedDictValuesView
+from collections import OrderedDict
 
 from collections.abc import Iterable
 from typing import Union, Optional, Dict, Text, Any, List, Coroutine, TypeVar, Set, Tuple
-
-from liyi_cute.shared.exceptions import NotImplementedException
 
 T = TypeVar("T")
 
@@ -150,15 +148,6 @@ def run_in_loop(
     loop.run_until_complete(asyncio.gather(*pending))
 
     return result
-
-
-def doubleQuotes(text):
-    """
-    双引号改成单引号
-    :param text:
-    :return:
-    """
-    return text.replace('"', "'")
 
 
 def is_cut_number(ids:List[Text]

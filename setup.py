@@ -56,8 +56,13 @@ setuptools.setup(
     ],
     install_requires= install_requires,
     tests_require=tests_requires,
-    python_requires='>=3.8',
+    python_requires='>=3.7',
     package_data=package_data,
+    entry_points={
+        'console_scripts': [
+            'liyi-cute = liyi_cute.__main__:main'
+        ]
+    },
     project_urls={
             'Bug Reports': 'https://github.com/daiyizheng/liyi-cute/issues',
             'Source': 'https://github.com/daiyizheng/liyi-cute',
